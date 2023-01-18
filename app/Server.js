@@ -1,5 +1,7 @@
 const express = require("express");
 const path = require("path");
+// const router = require("./routers/router");
+const { AllRouters } = require("./routers/router");
 
 module.exports = class Application {
   #app = express();
@@ -24,7 +26,7 @@ module.exports = class Application {
   CreateServer() {
     const http = require("http");
     http.createServer(this.#app).listen(this.#PORT, () => {
-      console.log(`server listening on port >` + this.#PORT);
+      console.log(`server listening to the port ` + this.#PORT);
     });
   }
 
@@ -57,9 +59,11 @@ module.exports = class Application {
       return res.status(status).json({ status, success: false, message });
     });
   }
+
   createRoutes() {
-    this.#app.get("/", (req, res, next) => {
-      return res.json({ message: "Welcome to my app" });
-    });
+    this.#app.use(AllRouters);
+    // this.#app.get("/", (req, res, next) => {
+    //   return res.json({ message: "Welcome to my app" });
+    // });
   }
 };
