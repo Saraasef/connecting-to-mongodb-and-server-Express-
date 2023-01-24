@@ -1,19 +1,37 @@
 const { body } = require("express-validator");
+const { userModel } = require("../../models/Users");
+
 function registerValidator() {
   return [
-    body("userName")
-      .notEmpty.length({ min: 4, max: 25 })
-      .custom((value, content) => {
-        if (value) {
-          const userNameRegex = /^[a-z]+[a-z0-9\-\.]{2,}/gi;
-        }
+    body("userName").custom(async (value, context) => {
+      if (value) {
+        const userNameRegex = /^[a-z]+[a-z0-9\-\.]{2,}/gi;
         if (userNameRegex.test(value)) {
+          const user = await userModel.findOne({ userName });
+          if (user) throw "the user name is existed already";
           return true;
         }
         throw "user name is not correct";
+      } else {
+        throw "user name schould not be emplty ";
+      }
+    }),
+    body("email")
+      .isEmail()
+      .withMessage("Email is not correct")
+      .custom(async (email) => {
+        const user = await userModel.findOne({ email });
+        if (user) throw "the email is existed already";
+        return true;
       }),
-    body("email").isEmail().withMessage("Email is not correct"),
-    body("mobile").isMobilePhone("de-DE").withMessage("mobile is not correct"),
+    body("mobile")
+      .isMobilePhone("de-DE")
+      .withMessage("mobile is not correct")
+      .custom(async (mobile) => {
+        const user = await userModel.findOne({ mobile });
+        if (user) throw "the email is existed already";
+        return true;
+      }),
     body("password")
       .isLength({ min: 6, max: 16 })
       .withMessage("password should be between 6-16 characters")
@@ -25,5 +43,28 @@ function registerValidator() {
       }),
   ];
 }
+function loginValidator() {
+  return [
+    body("userName")
+      .notEmpty()
+      .withMessage("user name should not be empty")
+      .custom(async (value, context) => {
+        if (value) {
+          const userNameRegex = /^[a-z]+[a-z0-9\-\.]{2,}/gi;
+          if (userNameRegex.test(value)) {
+            const user = await userModel.findOne({ userName });
+            if (user) throw "the user name is existed already";
+            return true;
+          }
+          throw "user name is not correct";
+        } else {
+          throw "user name schould not be emplty ";
+        }
+      }),
+    body("password")
+      .isLength({ min: 6, max: 16 })
+      .withMessage("password should be between 6-16 characters"),
+  ];
+}
 
-module.exports = { registerValidator };
+module.exports = { registerValidator, loginValidator };

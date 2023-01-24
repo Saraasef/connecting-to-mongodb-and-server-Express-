@@ -1,0 +1,20 @@
+###register request
+post http://localhost:3001/Auth/register
+Content-Type: application/json 
+
+{
+    "userName":"wemmrt",
+    "email":"a@aefi.hotmail.com",
+    "mobile":"01723454801",
+    "password":"123456l12"
+
+}
+
+###login request
+post http://localhost:3001/Auth/login
+Content-Type: application/json 
+
+{
+    "userName":"Ali",
+    "password":"12363456"
+}

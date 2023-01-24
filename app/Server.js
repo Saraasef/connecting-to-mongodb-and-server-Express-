@@ -1,15 +1,16 @@
 const express = require("express");
 const path = require("path");
-// const router = require("./routers/router");
 const { AllRouters } = require("./routers/router");
 
 module.exports = class Application {
   #app = express();
   #PORT;
   #DB_URL;
+  // #AllRouters;
   constructor(PORT, DB_URL) {
     this.#PORT = PORT;
     this.#DB_URL = DB_URL;
+    // this.#AllRouters = AllRouters;
     this.ConfigApplication();
     this.ConnectToMongoDb();
     this.CreateServer();
@@ -26,7 +27,7 @@ module.exports = class Application {
   CreateServer() {
     const http = require("http");
     http.createServer(this.#app).listen(this.#PORT, () => {
-      console.log(`server listening to the port ` + this.#PORT);
+      console.log("server is running on : http://localhost:" + this.#PORT);
     });
   }
 
@@ -36,12 +37,6 @@ module.exports = class Application {
     mongoose.connect(this.#DB_URL, (error) => {
       if (error) throw error;
       return console.log("conected to db successfuly ...");
-    });
-  }
-
-  CreateRoutes() {
-    this.#app.get("/", (req, res, next) => {
-      return res.json({ message: "Welcome to my app" });
     });
   }
 
@@ -60,10 +55,10 @@ module.exports = class Application {
     });
   }
 
-  createRoutes() {
+  CreateRoutes() {
+    this.#app.get("/", (req, res, next) => {
+      return res.json({ message: "Welcome to my app" });
+    });
     this.#app.use(AllRouters);
-    // this.#app.get("/", (req, res, next) => {
-    //   return res.json({ message: "Welcome to my app" });
-    // });
   }
 };
