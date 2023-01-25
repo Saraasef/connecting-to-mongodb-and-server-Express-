@@ -7,7 +7,7 @@ function registerValidator() {
       if (value) {
         const userNameRegex = /^[a-z]+[a-z0-9\-\.]{2,}/gi;
         if (userNameRegex.test(value)) {
-          const user = await userModel.findOne({ userName });
+          const user = await userModel.findOne({ userName: value });
           if (user) throw "the user name is existed already";
           return true;
         }
@@ -37,8 +37,8 @@ function registerValidator() {
       .withMessage("password should be between 6-16 characters")
       .custom((value, context) => {
         if (!value) throw "password should not be empty";
-        if (value !== context?.req?.body?.confirm_password)
-          throw "password is not equall with the confirm_password";
+        if (value !== context?.req?.body?.confirmPassword)
+          throw "password is not equall with the confirPassword";
         return true;
       }),
   ];
@@ -52,7 +52,7 @@ function loginValidator() {
         if (value) {
           const userNameRegex = /^[a-z]+[a-z0-9\-\.]{2,}/gi;
           if (userNameRegex.test(value)) {
-            const user = await userModel.findOne({ userName });
+            const user = await userModel.findOne({ userName: value });
             if (user) throw "the user name is existed already";
             return true;
           }

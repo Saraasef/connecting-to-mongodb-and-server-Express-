@@ -13,6 +13,8 @@ function expressValidatorMapper(req, res, next) {
       messages,
     });
   }
+
   next();
 }
+
 module.exports = { expressValidatorMapper };

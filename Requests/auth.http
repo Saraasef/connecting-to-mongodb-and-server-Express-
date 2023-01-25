@@ -3,10 +3,10 @@ post http://localhost:3001/Auth/register
 Content-Type: application/json 
 
 {
-    "userName":"wemmrt",
+    "userName":"ASE",
     "email":"a@aefi.hotmail.com",
     "mobile":"01723454801",
-    "password":"123456l12"
+    "password":"123456"
 
 }
 
@@ -15,6 +15,6 @@ post http://localhost:3001/Auth/login
 Content-Type: application/json 
 
 {
-    "userName":"Ali",
-    "password":"12363456"
+    "userName":"wert",
+    "password":"123456"
 }
