@@ -50,7 +50,7 @@ module.exports = class Application {
     });
     this.#app.use((error, req, res, next) => {
       const status = error?.status || 500;
-      const message = error?.message || "an internal server errror";
+      const message = error?.message || "an internal server error";
       return res.status(status).json({ status, success: false, message });
     });
   }

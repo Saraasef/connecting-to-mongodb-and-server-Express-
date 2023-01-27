@@ -18,6 +18,6 @@ router.post(
   "/login",
   loginValidator(),
   expressValidatorMapper,
-  AuthController.register
+  AuthController.login
 );
 module.exports = { authRouters: router };

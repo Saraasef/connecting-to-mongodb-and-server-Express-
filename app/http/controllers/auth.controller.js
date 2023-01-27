@@ -31,14 +31,14 @@ class AuthController {
       const { userName, password } = req.body;
       const user = await userModel.findOne({ userName });
       if (!user)
-        throw { status: 401, massage: "user name or password is not correct" };
+        throw { status: 401, message: "user name or password is not correct" };
       const compareResult = bcrypt.compareSync(password, user.password);
       if (!compareResult)
-        throw { status: 401, massage: "user name or password is not correct" };
+        throw { status: 401, message: "user name or password is not correct" };
       return res.status(200).json({
         status: 200,
         success: true,
-        massage: "you have successfully loggined",
+        message: "you have successfully loggined",
         token: tokenGenerator({ userName }),
       });
     } catch (error) {
