@@ -4,9 +4,9 @@ POST http://localhost:3001/auth/register
 Content-Type:application/json
 
 {
- "userName":"Sara",
- "email":"asefi@google.com",
- "mobile":"01636484905",
+ "userName":"Smara",
+ "email":"aef@google.com",
+ "mobile":"01786484905",
  "password":"123456",
  "confirm_password":"123456"
 
@@ -19,7 +19,7 @@ Content-Type:application/json
 
 POST http://localhost:3001/auth/login
 Content-Type:application/json
-
+Authorization: {{$dotenv token}}
 
 {
  "userName":"Sara",

@@ -35,11 +35,14 @@ class AuthController {
       const compareResult = bcrypt.compareSync(password, user.password);
       if (!compareResult)
         throw { status: 401, message: "user name or password is not correct" };
+      const token = tokenGenerator({ userName });
+      user.token = token;
+      user.save();
       return res.status(200).json({
         status: 200,
         success: true,
         message: "you have successfully loggined",
-        token: tokenGenerator({ userName }),
+        token,
       });
     } catch (error) {
       next(error);

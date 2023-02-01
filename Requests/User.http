@@ -1,0 +1,14 @@
+### request getprofile
+get http://localhost:3001/user/profile
+Authorization: Bearer {{$dotenv token}}
+
+### update getprofile
+POST http://localhost:3001/user/profile
+Authorization: Bearer {{$dotenv token}}
+Content-Type: application/json
+
+{
+    "fristName":"sara",
+    "lastName":"asef",
+    "skills":["programmer","nodejs","backend, frontend"]
+}

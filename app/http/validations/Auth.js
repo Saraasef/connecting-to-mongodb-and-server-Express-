@@ -7,7 +7,7 @@ function registerValidator() {
       if (value) {
         const usernameregex = /^[a-z]+[a-z 0-9\_\.]/gi;
         if (usernameregex.test(value)) {
-          const user = await userModel.findOne({ user_name: value });
+          const user = await userModel.findOne({ userName: value });
           if (user) throw "username is duplicate!";
           return true;
         }
@@ -20,7 +20,7 @@ function registerValidator() {
       .withMessage("The email entered is not valid")
       .custom(async (email) => {
         const user = await userModel.findOne({ email });
-        if (user) throw "email is duplicate!";
+        if (user) throw "email is duplicated!";
         return true;
       }),
     body("mobile")
@@ -28,7 +28,7 @@ function registerValidator() {
       .withMessage(" the mobile entered is not valid")
       .custom(async (mobile) => {
         const user = await userModel.findOne({ mobile });
-        if (user) throw "mobile is duplicate";
+        if (user) throw "mobile is duplicated";
         return true;
       }),
     body("password")
@@ -46,10 +46,10 @@ function loginValidator() {
   return [
     body("userName")
       .notEmpty()
-      .withMessage("username is not empty")
-      .custom((username) => {
+      .withMessage("username should not be empty")
+      .custom((userName) => {
         const usernameregex = /^[a-z]+[a-z 0-9\_\.]/gi;
-        if (usernameregex.test(username)) {
+        if (usernameregex.test(userName)) {
           return true;
         }
         throw "username or password is not true";
